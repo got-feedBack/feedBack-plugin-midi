@@ -6,9 +6,15 @@
   "description": "Send MIDI Program Change messages to your amp/modeler to auto-switch presets on tone changes.",
   "category": "audio",
   "icon": "assets/thumb.png",
-  "nav": { "label": "MIDI", "screen": "midi-amp" },
+  "nav": {
+    "label": "MIDI",
+    "screen": "midi-amp"
+  },
   "screen": "screen.html",
   "script": "screen.js",
-  "settings": { "html": "settings.html" },
+  "settings": {
+    "html": "settings.html",
+    "category": "audio"
+  },
   "routes": "routes.py"
 }
