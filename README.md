@@ -1,6 +1,6 @@
 # Slopsmith Plugin: MIDI Amp Control
 
-A plugin for [Slopsmith](https://github.com/got-feedback/feedback) that sends MIDI Program Change messages to your guitar amp/modeler, automatically switching presets when song tones change during playback.
+A plugin for [Slopsmith](https://github.com/got-feedback/feedBack) that sends MIDI Program Change messages to your guitar amp/modeler, automatically switching presets when song tones change during playback.
 
 ## Features
 
@@ -35,7 +35,7 @@ Works with any MIDI-capable guitar amp or modeler connected via USB MIDI:
 
 ```bash
 cd /path/to/slopsmith/plugins
-git clone https://github.com/got-feedback/feedback-plugin-midi.git midi_amp
+git clone https://github.com/got-feedback/feedBack-plugin-midi.git midi_amp
 docker compose restart
 ```
 
