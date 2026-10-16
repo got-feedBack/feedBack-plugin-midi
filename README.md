@@ -1,15 +1,17 @@
 # Slopsmith Plugin: MIDI Amp Control
 
-A plugin for [Slopsmith](https://github.com/got-feedback/feedback) that sends MIDI Program Change messages to your guitar amp/modeler, automatically switching presets when song tones change during playback.
+A plugin for [Slopsmith](https://github.com/got-feedback/feedback) that sends MIDI Control Change (CC) or Program Change (PC) messages to your guitar amp/modeler, automatically switching presets when song tones change during playback.
 
 ## Features
 
 - **Auto-detect MIDI devices** — uses the Web MIDI API to find connected USB MIDI devices
-- **Per-song tone mapping** — map each song tone to a MIDI program number (preset) on your device
-- **Bank Select support** — MSB and LSB for devices with more than 128 presets
+- **Per-song tone mapping** — map each song tone to a message for your device
+- **CC or PC per tone**: each mapping sends either a Control Change (**CC**, the default: CC number + value) or a Program Change (**PC**: the value is the program number)
+- **Bank Select support** — for PC mappings, MSB and LSB for devices with more than 128 presets. Bank Select is only sent when MSB or LSB is non-zero
+- **Optional second CC**: each mapping can also send one extra CC (`CC2#` + `CC2 Value`) on the same tone change, whatever the type
 - **Channel selection** — route to any MIDI channel (0-15)
-- **Test button** — send a Program Change manually to verify your mapping
-- **Player integration** — "MIDI" button in the player controls opens the mapping editor for the current song
+- **Test button** — send a CC or PC manually to verify your mapping
+- **Player integration** — "MIDI" button in the player opens the mapping editor for the current song. In the v3 UI it sits in the **Plugin controls** popover on the player rail
 - **Auto-save** — mappings persist in SQLite, saved automatically on change
 
 ## Compatible Devices
@@ -23,7 +25,7 @@ Works with any MIDI-capable guitar amp or modeler connected via USB MIDI:
 - Headrush Pedalboard
 - Valeton GP-100 / GP-200 / GP-5
 - Neural DSP Quad Cortex
-- Any device that accepts MIDI Program Change messages
+- Any device that accepts MIDI CC or Program Change messages
 
 ## Requirements
 
@@ -44,20 +46,27 @@ docker compose restart
 1. Connect your amp/modeler via USB MIDI
 2. Go to "MIDI" in the navigation (or click "MIDI" in the player controls)
 3. Search for a song and click it
-4. Each tone in the song is listed — set the MIDI channel, bank, and program number for each
+4. Each tone in the song is listed. Pick the **Type** (CC or PC), then set the channel and the **Value**. For CC, also set the **CC#**. For PC, the **MSB** and **LSB** bank fields appear
 5. Use the "Test" button to verify the correct preset switches on your device
-6. During playback, the plugin auto-sends Program Change messages when the song's tone switches
+6. During playback, the plugin sends the mapped message when the song's tone switches
 
 ### Mapping Example
 
-For a song with two tones (Clean and Distortion):
+For a song with two tones (Clean and Distortion), switching presets with Program Change:
 
-| Tone | Channel | Bank MSB | Bank LSB | Program |
-|------|---------|----------|----------|---------|
-| Clean Verse | 0 | 0 | 0 | 3 |
-| Distortion Chorus | 0 | 0 | 0 | 15 |
+| Tone | Type | Channel | Bank MSB | Bank LSB | Value |
+|------|------|---------|----------|----------|-------|
+| Clean Verse | PC | 0 | 0 | 0 | 3 |
+| Distortion Chorus | PC | 0 | 0 | 0 | 15 |
 
-The exact program numbers depend on how your presets are organized on your device.
+Or with Control Change (the CC number and values here are only an example):
+
+| Tone | Type | Channel | CC# | Value |
+|------|------|---------|-----|-------|
+| Clean Verse | CC | 0 | 69 | 0 |
+| Distortion Chorus | CC | 0 | 69 | 1 |
+
+The exact CC and program numbers depend on your device and how your presets are organized on it.
 
 ## License
 
