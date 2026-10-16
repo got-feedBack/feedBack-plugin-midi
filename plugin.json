@@ -3,7 +3,7 @@
   "name": "MIDI Amp Control",
   "version": "1.1.0",
   "private": false,
-  "description": "Send MIDI Program Change messages to your amp/modeler to auto-switch presets on tone changes.",
+  "description": "Send MIDI CC or Program Change messages to your amp/modeler to auto-switch presets on tone changes.",
   "category": "audio",
   "icon": "assets/thumb.png",
   "nav": {
